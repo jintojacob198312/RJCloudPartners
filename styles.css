@@ -41,6 +41,12 @@ body {
   backdrop-filter: blur(10px);
   border-bottom: 1px solid rgba(221, 227, 240, 0.7);
 }
+.logo-text {
+  font-size: 48px;
+  font-weight: 700;
+  line-height: 1;
+}
+
 .gradient-text {
   background: linear-gradient(135deg, #0E3864, #25638E, #4A96B1);
   -webkit-background-clip: text;
