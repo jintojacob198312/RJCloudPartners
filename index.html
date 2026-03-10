@@ -420,12 +420,153 @@
 
       <div class="hero-visual">
         <div style="position:relative;">
-          <!-- Hero image: cloud data center aesthetic from Unsplash -->
+          <!-- Self-contained animated cloud globe SVG — no external dependencies -->
           <div class="hero-img-card">
-            <img
-              src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=900&q=80&auto=format&fit=crop"
-              alt="Global cloud network"
-            />
+            <svg viewBox="0 0 520 340" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;">
+              <defs>
+                <radialGradient id="bgGlow" cx="50%" cy="45%" r="55%">
+                  <stop offset="0%" stop-color="#0D2D6B"/>
+                  <stop offset="100%" stop-color="#060D1F"/>
+                </radialGradient>
+                <radialGradient id="globeGrad" cx="38%" cy="35%" r="60%">
+                  <stop offset="0%" stop-color="#1E4DB7"/>
+                  <stop offset="60%" stop-color="#0A2260"/>
+                  <stop offset="100%" stop-color="#050E2A"/>
+                </radialGradient>
+                <radialGradient id="globeShine" cx="35%" cy="30%" r="45%">
+                  <stop offset="0%" stop-color="rgba(100,200,255,0.18)"/>
+                  <stop offset="100%" stop-color="rgba(0,0,0,0)"/>
+                </radialGradient>
+                <linearGradient id="lineGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stop-color="rgba(56,189,248,0)"/>
+                  <stop offset="50%" stop-color="rgba(56,189,248,0.7)"/>
+                  <stop offset="100%" stop-color="rgba(56,189,248,0)"/>
+                </linearGradient>
+                <filter id="nodeGlow">
+                  <feGaussianBlur stdDeviation="3" result="b"/>
+                  <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+                </filter>
+                <filter id="globeGlowF">
+                  <feGaussianBlur stdDeviation="12" result="b"/>
+                  <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+                </filter>
+                <clipPath id="globeClip">
+                  <circle cx="200" cy="170" r="130"/>
+                </clipPath>
+              </defs>
+
+              <!-- Background -->
+              <rect width="520" height="340" fill="url(#bgGlow)"/>
+
+              <!-- Ambient glow behind globe -->
+              <circle cx="200" cy="170" r="145" fill="rgba(37,99,235,0.12)" filter="url(#globeGlowF)"/>
+
+              <!-- Globe body -->
+              <circle cx="200" cy="170" r="130" fill="url(#globeGrad)" stroke="rgba(56,189,248,0.25)" stroke-width="1.5"/>
+
+              <!-- Globe latitude lines -->
+              <g clip-path="url(#globeClip)" stroke="rgba(56,189,248,0.15)" stroke-width="0.8" fill="none">
+                <ellipse cx="200" cy="170" rx="130" ry="30"/>
+                <ellipse cx="200" cy="170" rx="130" ry="65"/>
+                <ellipse cx="200" cy="170" rx="130" ry="100"/>
+                <ellipse cx="200" cy="170" rx="130" ry="125"/>
+                <!-- Longitude lines -->
+                <ellipse cx="200" cy="170" rx="40" ry="130"/>
+                <ellipse cx="200" cy="170" rx="80" ry="130"/>
+                <ellipse cx="200" cy="170" rx="110" ry="130"/>
+              </g>
+
+              <!-- Continent blobs -->
+              <g clip-path="url(#globeClip)" fill="rgba(56,189,248,0.18)" stroke="rgba(56,189,248,0.3)" stroke-width="0.5">
+                <ellipse cx="165" cy="145" rx="38" ry="22" transform="rotate(-15,165,145)"/>
+                <ellipse cx="220" cy="160" rx="28" ry="16" transform="rotate(10,220,160)"/>
+                <ellipse cx="175" cy="195" rx="22" ry="14" transform="rotate(-5,175,195)"/>
+                <ellipse cx="230" cy="195" rx="18" ry="10" transform="rotate(8,230,195)"/>
+                <ellipse cx="150" cy="175" rx="14" ry="20" transform="rotate(-20,150,175)"/>
+              </g>
+
+              <!-- Globe shine overlay -->
+              <circle cx="200" cy="170" r="130" fill="url(#globeShine)"/>
+              <!-- Globe edge highlight -->
+              <circle cx="200" cy="170" r="130" fill="none" stroke="rgba(100,200,255,0.3)" stroke-width="1"/>
+
+              <!-- ── Connection nodes on globe ── -->
+              <!-- Node: NA -->
+              <circle cx="155" cy="145" r="5" fill="#38BDF8" filter="url(#nodeGlow)" opacity="0.95"/>
+              <circle cx="155" cy="145" r="9" fill="none" stroke="rgba(56,189,248,0.4)" stroke-width="1">
+                <animate attributeName="r" values="9;15;9" dur="2.5s" repeatCount="indefinite"/>
+                <animate attributeName="opacity" values="0.5;0;0.5" dur="2.5s" repeatCount="indefinite"/>
+              </circle>
+
+              <!-- Node: EU -->
+              <circle cx="210" cy="138" r="5" fill="#7C3AED" filter="url(#nodeGlow)" opacity="0.95"/>
+              <circle cx="210" cy="138" r="9" fill="none" stroke="rgba(124,58,237,0.4)" stroke-width="1">
+                <animate attributeName="r" values="9;15;9" dur="3s" begin="0.8s" repeatCount="indefinite"/>
+                <animate attributeName="opacity" values="0.5;0;0.5" dur="3s" begin="0.8s" repeatCount="indefinite"/>
+              </circle>
+
+              <!-- Node: APAC -->
+              <circle cx="248" cy="178" r="5" fill="#0EA5E9" filter="url(#nodeGlow)" opacity="0.95"/>
+              <circle cx="248" cy="178" r="9" fill="none" stroke="rgba(14,165,233,0.4)" stroke-width="1">
+                <animate attributeName="r" values="9;15;9" dur="2.8s" begin="1.4s" repeatCount="indefinite"/>
+                <animate attributeName="opacity" values="0.5;0;0.5" dur="2.8s" begin="1.4s" repeatCount="indefinite"/>
+              </circle>
+
+              <!-- Node: SA -->
+              <circle cx="175" cy="200" r="4" fill="#38BDF8" filter="url(#nodeGlow)" opacity="0.85"/>
+
+              <!-- Arc lines between nodes -->
+              <path d="M155,145 Q182,100 210,138" fill="none" stroke="rgba(56,189,248,0.55)" stroke-width="1.2" stroke-dasharray="4,3"/>
+              <path d="M210,138 Q238,155 248,178" fill="none" stroke="rgba(124,58,237,0.55)" stroke-width="1.2" stroke-dasharray="4,3"/>
+              <path d="M155,145 Q162,178 175,200" fill="none" stroke="rgba(56,189,248,0.4)" stroke-width="1" stroke-dasharray="3,4"/>
+
+              <!-- ── Right panel: cloud services stack ── -->
+              <!-- Panel background -->
+              <rect x="360" y="30" width="145" height="280" rx="14" fill="rgba(10,21,48,0.7)" stroke="rgba(56,189,248,0.15)" stroke-width="1"/>
+
+              <!-- Panel title -->
+              <text x="432" y="58" text-anchor="middle" fill="rgba(56,189,248,0.7)" font-size="9" font-family="DM Sans,sans-serif" font-weight="600" letter-spacing="1.5">AZURE SERVICES</text>
+              <line x1="375" y1="65" x2="490" y2="65" stroke="rgba(56,189,248,0.15)" stroke-width="1"/>
+
+              <!-- Service rows -->
+              <!-- Row 1 -->
+              <rect x="373" y="74" width="119" height="34" rx="8" fill="rgba(37,99,235,0.15)" stroke="rgba(37,99,235,0.3)" stroke-width="1"/>
+              <text x="390" y="88" fill="#60A5FA" font-size="10" font-family="DM Sans,sans-serif">⚡</text>
+              <text x="406" y="88" fill="#E2E8F0" font-size="9" font-family="DM Sans,sans-serif" font-weight="600">Front Door</text>
+              <text x="406" y="100" fill="#7A90B0" font-size="7.5" font-family="DM Sans,sans-serif">CDN · WAF · TLS</text>
+
+              <!-- Row 2 -->
+              <rect x="373" y="116" width="119" height="34" rx="8" fill="rgba(124,58,237,0.15)" stroke="rgba(124,58,237,0.3)" stroke-width="1"/>
+              <text x="390" y="130" fill="#A78BFA" font-size="10" font-family="DM Sans,sans-serif">🛡️</text>
+              <text x="406" y="130" fill="#E2E8F0" font-size="9" font-family="DM Sans,sans-serif" font-weight="600">Entra ID</text>
+              <text x="406" y="142" fill="#7A90B0" font-size="7.5" font-family="DM Sans,sans-serif">MFA · Zero-Trust</text>
+
+              <!-- Row 3 -->
+              <rect x="373" y="158" width="119" height="34" rx="8" fill="rgba(14,165,233,0.15)" stroke="rgba(14,165,233,0.3)" stroke-width="1"/>
+              <text x="390" y="172" fill="#38BDF8" font-size="10" font-family="DM Sans,sans-serif">🚀</text>
+              <text x="406" y="172" fill="#E2E8F0" font-size="9" font-family="DM Sans,sans-serif" font-weight="600">App Services</text>
+              <text x="406" y="184" fill="#7A90B0" font-size="7.5" font-family="DM Sans,sans-serif">Containers · APIs</text>
+
+              <!-- Row 4 -->
+              <rect x="373" y="200" width="119" height="34" rx="8" fill="rgba(5,150,105,0.15)" stroke="rgba(5,150,105,0.3)" stroke-width="1"/>
+              <text x="390" y="214" fill="#34D399" font-size="10" font-family="DM Sans,sans-serif">🗄️</text>
+              <text x="406" y="214" fill="#E2E8F0" font-size="9" font-family="DM Sans,sans-serif" font-weight="600">SQL / Cosmos</text>
+              <text x="406" y="226" fill="#7A90B0" font-size="7.5" font-family="DM Sans,sans-serif">Geo-replicated</text>
+
+              <!-- Row 5 -->
+              <rect x="373" y="242" width="119" height="34" rx="8" fill="rgba(245,158,11,0.12)" stroke="rgba(245,158,11,0.25)" stroke-width="1"/>
+              <text x="390" y="256" fill="#FCD34D" font-size="10" font-family="DM Sans,sans-serif">📊</text>
+              <text x="406" y="256" fill="#E2E8F0" font-size="9" font-family="DM Sans,sans-serif" font-weight="600">Monitor</text>
+              <text x="406" y="268" fill="#7A90B0" font-size="7.5" font-family="DM Sans,sans-serif">Logs · Alerts · Cost</text>
+
+              <!-- Connecting lines from globe to panel -->
+              <line x1="330" y1="145" x2="360" y2="133" stroke="rgba(56,189,248,0.25)" stroke-width="1" stroke-dasharray="3,4"/>
+              <line x1="330" y1="170" x2="360" y2="175" stroke="rgba(124,58,237,0.25)" stroke-width="1" stroke-dasharray="3,4"/>
+              <line x1="330" y1="195" x2="360" y2="217" stroke="rgba(14,165,233,0.25)" stroke-width="1" stroke-dasharray="3,4"/>
+
+              <!-- Bottom label -->
+              <text x="260" y="328" text-anchor="middle" fill="rgba(255,255,255,0.2)" font-size="7.5" font-family="DM Sans,sans-serif" letter-spacing="1">GLOBAL CLOUD INFRASTRUCTURE · RJ CLOUD PARTNERS</text>
+            </svg>
             <div class="img-caption">Enterprise-grade cloud infrastructure, globally distributed</div>
           </div>
           <div class="stat-badge sb1">
