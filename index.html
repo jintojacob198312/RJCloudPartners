@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>RJ Cloud Partners | Trusted Cloud Consulting</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --navy:   #060D1F;
+      --navy2:  #0A1530;
+      --card:   #0D1B38;
+      --border: rgba(56,189,248,0.12);
+      --blue:   #2563EB;
+      --sky:    #38BDF8;
+      --violet: #7C3AED;
+      --text:   #E2E8F0;
+      --muted:  #7A90B0;
+      --grad:   linear-gradient(135deg,#0EA5E9,#2563EB,#7C3AED);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--navy);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    /* ── STARFIELD ── */
+    #stars {
+      position: fixed; inset: 0; z-index: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 20% 0%, rgba(37,99,235,0.18) 0%, transparent 70%),
+        radial-gradient(ellipse 60% 50% at 80% 10%, rgba(124,58,237,0.14) 0%, transparent 60%),
+        var(--navy);
+      pointer-events: none;
+    }
+    #stars::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image:
+        radial-gradient(1px 1px at 10% 15%, rgba(255,255,255,0.6) 0%, transparent 100%),
+        radial-gradient(1px 1px at 25% 40%, rgba(255,255,255,0.4) 0%, transparent 100%),
+        radial-gradient(1px 1px at 40% 8%,  rgba(255,255,255,0.5) 0%, transparent 100%),
+        radial-gradient(1px 1px at 55% 60%, rgba(255,255,255,0.3) 0%, transparent 100%),
+        radial-gradient(1px 1px at 70% 20%, rgba(255,255,255,0.6) 0%, transparent 100%),
+        radial-gradient(1px 1px at 85% 50%, rgba(255,255,255,0.4) 0%, transparent 100%),
+        radial-gradient(1px 1px at 92% 80%, rgba(255,255,255,0.3) 0%, transparent 100%),
+        radial-gradient(1px 1px at 5%  75%, rgba(255,255,255,0.5) 0%, transparent 100%),
+        radial-gradient(1px 1px at 33% 88%, rgba(255,255,255,0.4) 0%, transparent 100%),
+        radial-gradient(1px 1px at 60% 35%, rgba(255,255,255,0.3) 0%, transparent 100%),
+        radial-gradient(1px 1px at 78% 70%, rgba(255,255,255,0.5) 0%, transparent 100%);
+      background-size: 100% 100%;
+    }
+
+    /* wrap everything above starfield */
+    .page { position: relative; z-index: 1; }
+
+    /* ── NAV ── */
+    .top-nav {
+      position: sticky; top: 0; z-index: 50;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 14px 6vw;
+      background: rgba(12, 28, 65, 0.55);
+      backdrop-filter: blur(24px) brightness(1.15) saturate(1.4);
+      -webkit-backdrop-filter: blur(24px) brightness(1.15) saturate(1.4);
+      border-bottom: 1px solid rgba(100,180,255,0.18);
+      box-shadow: 0 1px 0 rgba(56,189,248,0.08), 0 4px 24px rgba(0,0,0,0.25);
+    }
+    .logo { display: flex; align-items: center; gap: 10px; }
+    .logo-img { height: 72px; width: auto; }
+    .logo-text {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.45rem; font-weight: 800;
+      background: linear-gradient(135deg, #48B4E8, #6DD4F5, #A8E4FF);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+      filter: drop-shadow(0 0 8px rgba(72,180,232,0.45));
+    }
+    nav { display: flex; align-items: center; gap: 10px; font-size: 0.9rem; }
+    nav a {
+      text-decoration: none; color: var(--muted);
+      padding: 7px 14px; border-radius: 999px;
+      transition: color .2s, background .2s;
+    }
+    nav a:hover { color: var(--text); background: rgba(255,255,255,0.06); }
+    .btn-nav {
+      border: 1px solid rgba(56,189,248,0.4); color: var(--sky) !important;
+    }
+    .btn-nav:hover { background: rgba(56,189,248,0.08) !important; }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 88vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      gap: 48px;
+      padding: 80px 6vw 60px;
+    }
+    .hero-text { animation: fadeUp .9s ease both; }
+    .hero-eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 0.78rem; font-weight: 500; letter-spacing: .12em;
+      text-transform: uppercase; color: var(--sky);
+      border: 1px solid rgba(56,189,248,0.3);
+      padding: 5px 14px; border-radius: 999px;
+      margin-bottom: 22px;
+    }
+    .hero-eyebrow span { width: 6px; height: 6px; border-radius: 50%; background: var(--sky); animation: pulse 2s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.5;transform:scale(.75)} }
+
+    .hero-text h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(2.4rem, 3.5vw, 3.8rem);
+      font-weight: 800; line-height: 1.08;
+      margin-bottom: 20px;
+    }
+    .hero-text h1 em {
+      font-style: normal;
+      background: var(--grad);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero-text p {
+      font-size: 1.05rem; color: var(--muted); line-height: 1.7;
+      max-width: 480px; margin-bottom: 32px;
+    }
+    .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 36px; }
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 7px;
+      padding: 13px 26px; border-radius: 999px;
+      background: var(--grad); color: #fff;
+      font-family: 'DM Sans', sans-serif; font-size: .95rem; font-weight: 500;
+      text-decoration: none; border: none; cursor: pointer;
+      box-shadow: 0 0 32px rgba(37,99,235,0.45);
+      transition: transform .2s, box-shadow .2s;
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 0 48px rgba(37,99,235,0.6); }
+    .btn-secondary {
+      display: inline-flex; align-items: center; gap: 7px;
+      padding: 13px 26px; border-radius: 999px;
+      background: transparent; color: var(--text);
+      font-family: 'DM Sans', sans-serif; font-size: .95rem;
+      text-decoration: none;
+      border: 1px solid rgba(255,255,255,0.14);
+      transition: border-color .2s, background .2s;
+    }
+    .btn-secondary:hover { border-color: var(--sky); background: rgba(56,189,248,0.06); }
+
+    .hero-badges { display: flex; flex-wrap: wrap; gap: 8px; }
+    .hero-badges span {
+      padding: 5px 12px; border-radius: 999px;
+      font-size: 0.78rem; font-weight: 500;
+      background: rgba(37,99,235,0.12);
+      border: 1px solid rgba(37,99,235,0.25);
+      color: var(--sky);
+    }
+
+    /* hero visual side */
+    .hero-visual { animation: fadeUp .9s .2s ease both; }
+
+    /* ── CLOUD IMAGE CARD ── */
+    .hero-img-card {
+      border-radius: 20px;
+      border: 1px solid var(--border);
+      overflow: hidden;
+      position: relative;
+      background: var(--card);
+      box-shadow: 0 30px 80px rgba(0,0,0,0.5), 0 0 0 1px var(--border);
+    }
+    .hero-img-card img {
+      width: 100%; display: block;
+      filter: saturate(1.1) brightness(0.9);
+    }
+    /* overlay glow */
+    .hero-img-card::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(180deg, transparent 40%, rgba(6,13,31,0.85) 100%);
+    }
+    .img-caption {
+      position: absolute; bottom: 16px; left: 16px; right: 16px;
+      z-index: 2;
+      font-size: 0.78rem; color: rgba(255,255,255,0.55);
+      font-style: italic;
+    }
+
+    /* floating stats */
+    .stat-badge {
+      position: absolute;
+      background: rgba(10,21,48,0.85);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 10px 16px;
+      z-index: 3;
+      animation: float 4s ease-in-out infinite;
+    }
+    .stat-badge .num { font-family: 'Syne',sans-serif; font-size: 1.5rem; font-weight: 800; background: var(--grad); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+    .stat-badge .lbl { font-size: 0.7rem; color: var(--muted); }
+    .sb1 { top: 18px; left: -18px; animation-delay: 0s; }
+    .sb2 { bottom: 60px; right: -18px; animation-delay: 1.5s; }
+    @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
+
+    /* ── SECTION BASE ── */
+    section { padding: 90px 6vw; }
+    .section-label {
+      font-size: 0.72rem; letter-spacing: .15em; text-transform: uppercase;
+      color: var(--sky); font-weight: 600; margin-bottom: 10px;
+    }
+    .section-title {
+      font-family: 'Syne', sans-serif; font-size: clamp(1.8rem,2.5vw,2.6rem);
+      font-weight: 800; margin-bottom: 14px; line-height: 1.15;
+    }
+    .section-sub { color: var(--muted); max-width: 520px; line-height: 1.7; }
+
+    /* ── SERVICES ── */
+    #services { background: var(--navy2); }
+    .services-header { margin-bottom: 48px; }
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px,1fr));
+      gap: 20px;
+    }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 28px 24px;
+      position: relative; overflow: hidden;
+      transition: border-color .3s, transform .3s;
+    }
+    .card:hover { border-color: rgba(56,189,248,0.4); transform: translateY(-4px); }
+    .card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: var(--grad); opacity: 0;
+      transition: opacity .3s;
+    }
+    .card:hover::before { opacity: 1; }
+    .card-icon {
+      width: 46px; height: 46px; border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 16px; font-size: 1.4rem;
+    }
+    .ci-1 { background: rgba(14,165,233,0.12); }
+    .ci-2 { background: rgba(37,99,235,0.12); }
+    .ci-3 { background: rgba(124,58,237,0.12); }
+    .ci-4 { background: rgba(16,185,129,0.12); }
+    .card h3 { font-family:'Syne',sans-serif; font-size: 1.05rem; font-weight: 700; margin-bottom: 8px; }
+    .card p { font-size: 0.88rem; color: var(--muted); line-height: 1.65; }
+
+    /* ── ARCHITECTURE DIAGRAM SECTION ── */
+    #architecture { background: var(--navy); }
+    .arch-wrapper {
+      display: grid;
+      grid-template-columns: 1fr 380px;
+      gap: 48px;
+      align-items: start;
+      margin-top: 48px;
+    }
+
+    /* SVG ARCHITECTURE DIAGRAM */
+    .arch-diagram-container {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 28px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+    }
+    .arch-diagram-container svg { width: 100%; height: auto; display: block; }
+
+    /* arch side cards */
+    .arch-side { display: flex; flex-direction: column; gap: 16px; }
+    .arch-pill {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 14px; padding: 18px 20px;
+      display: flex; gap: 14px; align-items: flex-start;
+      transition: border-color .3s;
+    }
+    .arch-pill:hover { border-color: rgba(56,189,248,0.35); }
+    .arch-pill-icon { font-size: 1.4rem; margin-top: 2px; }
+    .arch-pill h4 { font-family:'Syne',sans-serif; font-size:.95rem; font-weight:700; margin-bottom:4px; }
+    .arch-pill p { font-size:.82rem; color:var(--muted); line-height:1.55; }
+
+    /* ── WHY US ── */
+    #why-us { background: var(--navy2); }
+    .why-grid {
+      display: grid;
+      grid-template-columns: repeat(3,1fr);
+      gap: 24px;
+      margin-top: 48px;
+    }
+    .why-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 32px 24px;
+      position: relative;
+    }
+    .why-num {
+      font-family: 'Syne',sans-serif; font-size: 3rem; font-weight: 800;
+      background: var(--grad); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+      opacity: .25; position: absolute; top: 16px; right: 20px;
+    }
+    .why-card h3 { font-family:'Syne',sans-serif; font-size:1.1rem; font-weight:700; margin-bottom:10px; }
+    .why-card p { font-size:.88rem; color:var(--muted); line-height:1.65; }
+
+    /* ── CONTACT ── */
+    #contact { background: var(--navy); }
+    .contact-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: start;
+    }
+    .contact-left .section-title { margin-top: 10px; }
+    .contact-left p { color:var(--muted); line-height:1.7; margin-bottom:28px; }
+    .contact-info-row { display:flex; align-items:center; gap:10px; font-size:.9rem; color:var(--muted); margin-bottom:10px; }
+    .contact-form {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 30px 26px;
+    }
+    .form-row { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+    .form-field { display:flex; flex-direction:column; gap:5px; margin-bottom:14px; }
+    label { font-size:.8rem; color:var(--muted); }
+    input, select, textarea {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 10px; padding: 10px 14px;
+      color: var(--text); font-family:'DM Sans',sans-serif; font-size:.9rem;
+      outline: none; transition: border-color .2s;
+    }
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--sky);
+      box-shadow: 0 0 0 3px rgba(56,189,248,0.1);
+    }
+    select option { background: var(--card); }
+    textarea { resize: vertical; }
+
+    /* ── FOOTER ── */
+    .footer {
+      padding: 24px 6vw;
+      background: var(--navy2);
+      border-top: 1px solid var(--border);
+      display: flex; align-items:center; justify-content:space-between;
+      font-size:.82rem; color:var(--muted);
+    }
+    .footer-logo { display:flex; align-items:center; gap:8px; }
+    .footer-logo img { height:36px; }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity:0; transform:translateY(30px); }
+      to   { opacity:1; transform:translateY(0); }
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width:1000px) {
+      .hero { grid-template-columns:1fr; min-height:auto; }
+      .hero-visual { order:-1; }
+      .arch-wrapper { grid-template-columns:1fr; }
+      .why-grid { grid-template-columns:1fr; }
+      .contact-inner { grid-template-columns:1fr; }
+    }
+    @media (max-width:700px) {
+      .top-nav { flex-wrap:wrap; gap:10px; }
+      .form-row { grid-template-columns:1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<div id="stars"></div>
+<div class="page">
+
+  <!-- NAV -->
+  <header class="top-nav">
+    <div class="logo">
+      <img src="logo.png" class="logo-img" alt="RJ Cloud Partners Logo">
+      <span class="logo-text">RJ Cloud Partners</span>
+    </div>
+    <nav>
+      <a href="#services">Services</a>
+      <a href="#architecture">Architecture</a>
+      <a href="#why-us">Why Us</a>
+      <a href="#contact" class="btn-nav">Contact</a>
+    </nav>
+  </header>
+
+  <main>
+
+    <!-- ═══════════════════ HERO ═══════════════════ -->
+    <section class="hero">
+      <div class="hero-text">
+        <div class="hero-eyebrow">
+          <span></span> Azure-Certified Cloud Experts
+        </div>
+        <h1>Build Your Cloud.<br><em>Without the Guesswork.</em></h1>
+        <p>We design, secure, and optimize enterprise cloud architectures—so you move faster with confidence.</p>
+        <div class="hero-actions">
+          <a href="#contact" class="btn-primary">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            Schedule a Consultation
+          </a>
+          <a href="#architecture" class="btn-secondary">View Architecture</a>
+        </div>
+        <div class="hero-badges">
+          <span>Azure</span>
+          <span>Zero-Trust Security</span>
+          <span>FinOps</span>
+          <span>Multi-Cloud</span>
+        </div>
+      </div>
+
+      <div class="hero-visual">
+        <div style="position:relative;">
+          <!-- Hero image: cloud data center aesthetic from Unsplash -->
+          <div class="hero-img-card">
+            <img
+              src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=900&q=80&auto=format&fit=crop"
+              alt="Global cloud network"
+            />
+            <div class="img-caption">Enterprise-grade cloud infrastructure, globally distributed</div>
+          </div>
+          <div class="stat-badge sb1">
+            <div class="num">99.99%</div>
+            <div class="lbl">Uptime SLA</div>
+          </div>
+          <div class="stat-badge sb2">
+            <div class="num">50+</div>
+            <div class="lbl">Deployments</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════ SERVICES ═══════════════════ -->
+    <section id="services">
+      <div class="services-header">
+        <div class="section-label">What We Do</div>
+        <h2 class="section-title">Cloud Services We Deliver</h2>
+        <p class="section-sub">From first migration to advanced optimization — your entire cloud journey, covered.</p>
+      </div>
+      <div class="cards-grid">
+        <article class="card">
+          <div class="card-icon ci-1">☁️</div>
+          <h3>Cloud Strategy & Assessment</h3>
+          <p>Define your target state and build a pragmatic roadmap to the cloud.</p>
+        </article>
+        <article class="card">
+          <div class="card-icon ci-2">🏗️</div>
+          <h3>Azure Architecture & Design</h3>
+          <p>Secure, scalable architectures aligned with Microsoft best practices.</p>
+        </article>
+        <article class="card">
+          <div class="card-icon ci-3">🚀</div>
+          <h3>Migration & Modernization</h3>
+          <p>Move workloads with minimal disruption and maximum long-term value.</p>
+        </article>
+        <article class="card">
+          <div class="card-icon ci-4">🔐</div>
+          <h3>Security, Governance & FinOps</h3>
+          <p>Guardrails, cost controls, and monitoring so your cloud stays efficient.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- ═══════════════════ ARCHITECTURE ═══════════════════ -->
+    <section id="architecture">
+      <div class="section-label">Reference Design</div>
+      <h2 class="section-title">Cloud Architecture Approach</h2>
+      <p class="section-sub">Reference architectures tailored to your industry, scale, and risk profile.</p>
+
+      <div class="arch-wrapper">
+
+        <!-- ─── FULL SVG CLOUD ARCHITECTURE DIAGRAM ─── -->
+        <div class="arch-diagram-container">
+          <svg viewBox="0 0 700 480" xmlns="http://www.w3.org/2000/svg" font-family="DM Sans, sans-serif">
+            <defs>
+              <linearGradient id="g1" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#0EA5E9"/>
+                <stop offset="100%" stop-color="#2563EB"/>
+              </linearGradient>
+              <linearGradient id="g2" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#2563EB"/>
+                <stop offset="100%" stop-color="#7C3AED"/>
+              </linearGradient>
+              <linearGradient id="g3" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#0891B2"/>
+                <stop offset="100%" stop-color="#0EA5E9"/>
+              </linearGradient>
+              <linearGradient id="g4" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#059669"/>
+                <stop offset="100%" stop-color="#0EA5E9"/>
+              </linearGradient>
+              <filter id="glow2">
+                <feGaussianBlur stdDeviation="3" result="blur"/>
+                <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+              </filter>
+              <marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+                <path d="M0,0 L0,6 L8,3 z" fill="rgba(56,189,248,0.6)"/>
+              </marker>
+              <marker id="arrow2" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+                <path d="M0,0 L0,6 L8,3 z" fill="rgba(124,58,237,0.6)"/>
+              </marker>
+            </defs>
+
+            <!-- Background -->
+            <rect width="700" height="480" rx="14" fill="#0D1B38"/>
+
+            <!-- Grid lines -->
+            <g stroke="rgba(56,189,248,0.05)" stroke-width="1">
+              <line x1="0" y1="120" x2="700" y2="120"/>
+              <line x1="0" y1="240" x2="700" y2="240"/>
+              <line x1="0" y1="360" x2="700" y2="360"/>
+              <line x1="175" y1="0" x2="175" y2="480"/>
+              <line x1="350" y1="0" x2="350" y2="480"/>
+              <line x1="525" y1="0" x2="525" y2="480"/>
+            </g>
+
+            <!-- ── LAYER LABELS (left side) ── -->
+            <!-- Layer 1: Users -->
+            <rect x="12" y="18" width="100" height="92" rx="8" fill="rgba(14,165,233,0.08)" stroke="rgba(14,165,233,0.2)" stroke-width="1"/>
+            <text x="62" y="42" text-anchor="middle" fill="#38BDF8" font-size="9" font-weight="600" letter-spacing="1">USERS</text>
+            <text x="62" y="58" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-size="8">Layer 0</text>
+
+            <!-- Layer 2: Edge / CDN -->
+            <rect x="12" y="128" width="100" height="92" rx="8" fill="rgba(37,99,235,0.08)" stroke="rgba(37,99,235,0.2)" stroke-width="1"/>
+            <text x="62" y="152" text-anchor="middle" fill="#60A5FA" font-size="9" font-weight="600" letter-spacing="1">EDGE</text>
+            <text x="62" y="168" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-size="8">Layer 1</text>
+
+            <!-- Layer 3: App -->
+            <rect x="12" y="248" width="100" height="92" rx="8" fill="rgba(124,58,237,0.08)" stroke="rgba(124,58,237,0.2)" stroke-width="1"/>
+            <text x="62" y="272" text-anchor="middle" fill="#A78BFA" font-size="9" font-weight="600" letter-spacing="1">APP</text>
+            <text x="62" y="288" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-size="8">Layer 2</text>
+
+            <!-- Layer 4: Data -->
+            <rect x="12" y="368" width="100" height="92" rx="8" fill="rgba(5,150,105,0.08)" stroke="rgba(5,150,105,0.2)" stroke-width="1"/>
+            <text x="62" y="392" text-anchor="middle" fill="#34D399" font-size="9" font-weight="600" letter-spacing="1">DATA</text>
+            <text x="62" y="408" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-size="8">Layer 3</text>
+
+            <!-- ══════════ NODES ══════════ -->
+
+            <!-- ─ LAYER 0: USERS ─ -->
+            <!-- Web Users -->
+            <rect x="150" y="22" width="110" height="52" rx="10" fill="url(#g1)" filter="url(#glow2)" opacity="0.9"/>
+            <text x="205" y="44" text-anchor="middle" fill="white" font-size="10" font-weight="600">🌐 Web Users</text>
+            <text x="205" y="60" text-anchor="middle" fill="rgba(255,255,255,0.7)" font-size="8">Browser / Mobile</text>
+
+            <!-- Corp Users -->
+            <rect x="290" y="22" width="120" height="52" rx="10" fill="url(#g1)" opacity="0.85"/>
+            <text x="350" y="44" text-anchor="middle" fill="white" font-size="10" font-weight="600">🏢 Corp Users</text>
+            <text x="350" y="60" text-anchor="middle" fill="rgba(255,255,255,0.7)" font-size="8">VPN / ExpressRoute</text>
+
+            <!-- Partners -->
+            <rect x="440" y="22" width="110" height="52" rx="10" fill="url(#g1)" opacity="0.8"/>
+            <text x="495" y="44" text-anchor="middle" fill="white" font-size="10" font-weight="600">🤝 Partners</text>
+            <text x="495" y="60" text-anchor="middle" fill="rgba(255,255,255,0.7)" font-size="8">B2B / API</text>
+
+            <!-- ─ LAYER 1: EDGE ─ -->
+            <!-- Azure Front Door -->
+            <rect x="150" y="140" width="130" height="58" rx="10" fill="url(#g2)" opacity="0.9"/>
+            <text x="215" y="163" text-anchor="middle" fill="white" font-size="10" font-weight="600">⚡ Azure Front Door</text>
+            <text x="215" y="178" text-anchor="middle" fill="rgba(255,255,255,0.7)" font-size="8">CDN · WAF · TLS</text>
+
+            <!-- Azure Firewall -->
+            <rect x="310" y="140" width="130" height="58" rx="10" fill="url(#g2)" opacity="0.85"/>
+            <text x="375" y="163" text-anchor="middle" fill="white" font-size="10" font-weight="600">🛡️ Azure Firewall</text>
+            <text x="375" y="178" text-anchor="middle" fill="rgba(255,255,255,0.7)" font-size="8">IDPS · DDoS · NSG</text>
+
+            <!-- Entra ID -->
+            <rect x="470" y="140" width="110" height="58" rx="10" fill="url(#g3)" opacity="0.9"/>
+            <text x="525" y="163" text-anchor="middle" fill="white" font-size="10" font-weight="600">🔑 Entra ID</text>
+            <text x="525" y="178" text-anchor="middle" fill="rgba(255,255,255,0.7)" font-size="8">MFA · Conditional</text>
+
+            <!-- ─ LAYER 2: APP ─ -->
+            <!-- App Services -->
+            <rect x="150" y="262" width="120" height="58" rx="10" fill="rgba(124,58,237,0.7)" stroke="rgba(167,139,250,0.3)" stroke-width="1" opacity="0.95"/>
+            <text x="210" y="285" text-anchor="middle" fill="white" font-size="10" font-weight="600">🚀 App Services</text>
+            <text x="210" y="300" text-anchor="middle" fill="rgba(255,255,255,0.7)" font-size="8">Containers · APIs</text>
+
+            <!-- API Mgmt -->
+            <rect x="295" y="262" width="110" height="58" rx="10" fill="rgba(124,58,237,0.6)" stroke="rgba(167,139,250,0.3)" stroke-width="1"/>
+            <text x="350" y="285" text-anchor="middle" fill="white" font-size="10" font-weight="600">⚙️ API Mgmt</text>
+            <text x="350" y="300" text-anchor="middle" fill="rgba(255,255,255,0.7)" font-size="8">Gateway · Policies</text>
+
+            <!-- Functions -->
+            <rect x="430" y="262" width="110" height="58" rx="10" fill="rgba(124,58,237,0.55)" stroke="rgba(167,139,250,0.3)" stroke-width="1"/>
+            <text x="485" y="285" text-anchor="middle" fill="white" font-size="10" font-weight="600">λ Functions</text>
+            <text x="485" y="300" text-anchor="middle" fill="rgba(255,255,255,0.7)" font-size="8">Serverless · Events</text>
+
+            <!-- ─ LAYER 3: DATA ─ -->
+            <!-- SQL -->
+            <rect x="150" y="382" width="100" height="58" rx="10" fill="url(#g4)" opacity="0.85"/>
+            <text x="200" y="405" text-anchor="middle" fill="white" font-size="10" font-weight="600">🗄️ SQL DB</text>
+            <text x="200" y="420" text-anchor="middle" fill="rgba(255,255,255,0.7)" font-size="8">Geo-replicated</text>
+
+            <!-- CosmosDB -->
+            <rect x="268" y="382" width="104" height="58" rx="10" fill="url(#g4)" opacity="0.8"/>
+            <text x="320" y="405" text-anchor="middle" fill="white" font-size="10" font-weight="600">🌌 Cosmos DB</text>
+            <text x="320" y="420" text-anchor="middle" fill="rgba(255,255,255,0.7)" font-size="8">NoSQL · Global</text>
+
+            <!-- Storage -->
+            <rect x="386" y="382" width="100" height="58" rx="10" fill="url(#g4)" opacity="0.75"/>
+            <text x="436" y="405" text-anchor="middle" fill="white" font-size="10" font-weight="600">📦 Storage</text>
+            <text x="436" y="420" text-anchor="middle" fill="rgba(255,255,255,0.7)" font-size="8">Blob · Data Lake</text>
+
+            <!-- Key Vault -->
+            <rect x="500" y="382" width="100" height="58" rx="10" fill="rgba(5,150,105,0.6)" stroke="rgba(52,211,153,0.3)" stroke-width="1"/>
+            <text x="550" y="405" text-anchor="middle" fill="white" font-size="10" font-weight="600">🔐 Key Vault</text>
+            <text x="550" y="420" text-anchor="middle" fill="rgba(255,255,255,0.7)" font-size="8">Secrets · Certs</text>
+
+            <!-- ══════════ MONITOR PANEL (right side) ══════════ -->
+            <rect x="618" y="248" width="66" height="192" rx="10" fill="rgba(14,165,233,0.07)" stroke="rgba(14,165,233,0.15)" stroke-width="1"/>
+            <text x="651" y="268" text-anchor="middle" fill="#38BDF8" font-size="8" font-weight="600">MONITOR</text>
+            <text x="651" y="290" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="7.5">Azure</text>
+            <text x="651" y="302" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="7.5">Monitor</text>
+            <text x="651" y="324" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="7.5">Log</text>
+            <text x="651" y="336" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="7.5">Analytics</text>
+            <text x="651" y="358" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="7.5">Defender</text>
+            <text x="651" y="370" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="7.5">for Cloud</text>
+            <text x="651" y="392" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="7.5">Cost</text>
+            <text x="651" y="404" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="7.5">Mgmt</text>
+            <!-- dashed border to app layer -->
+            <line x1="618" y1="320" x2="540" y2="295" stroke="rgba(14,165,233,0.2)" stroke-width="1" stroke-dasharray="3,3"/>
+            <line x1="618" y1="380" x2="500" y2="412" stroke="rgba(14,165,233,0.2)" stroke-width="1" stroke-dasharray="3,3"/>
+
+            <!-- ══════════ FLOW ARROWS ══════════ -->
+            <!-- Users → Edge -->
+            <line x1="205" y1="74" x2="215" y2="138" stroke="rgba(56,189,248,0.5)" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#arrow)"/>
+            <line x1="350" y1="74" x2="340" y2="138" stroke="rgba(56,189,248,0.5)" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#arrow)"/>
+            <line x1="495" y1="74" x2="510" y2="138" stroke="rgba(56,189,248,0.4)" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#arrow)"/>
+
+            <!-- Edge → App -->
+            <line x1="215" y1="198" x2="210" y2="260" stroke="rgba(124,58,237,0.5)" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#arrow2)"/>
+            <line x1="350" y1="198" x2="350" y2="260" stroke="rgba(124,58,237,0.5)" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#arrow2)"/>
+            <line x1="495" y1="198" x2="475" y2="260" stroke="rgba(124,58,237,0.4)" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#arrow2)"/>
+
+            <!-- App → Data -->
+            <line x1="210" y1="320" x2="200" y2="380" stroke="rgba(52,211,153,0.5)" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#arrow)"/>
+            <line x1="350" y1="320" x2="320" y2="380" stroke="rgba(52,211,153,0.4)" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#arrow)"/>
+            <line x1="485" y1="320" x2="436" y2="380" stroke="rgba(52,211,153,0.4)" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#arrow)"/>
+            <line x1="485" y1="320" x2="540" y2="380" stroke="rgba(52,211,153,0.4)" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#arrow)"/>
+
+            <!-- Horizontal connectors in edge layer -->
+            <line x1="280" y1="169" x2="310" y2="169" stroke="rgba(56,189,248,0.3)" stroke-width="1"/>
+            <line x1="440" y1="169" x2="470" y2="169" stroke="rgba(56,189,248,0.3)" stroke-width="1"/>
+
+            <!-- Horizontal connectors in app layer -->
+            <line x1="270" y1="291" x2="295" y2="291" stroke="rgba(124,58,237,0.3)" stroke-width="1"/>
+            <line x1="405" y1="291" x2="430" y2="291" stroke="rgba(124,58,237,0.3)" stroke-width="1"/>
+
+            <!-- Caption -->
+            <text x="350" y="466" text-anchor="middle" fill="rgba(255,255,255,0.25)" font-size="8" letter-spacing="1">AZURE CLOUD REFERENCE ARCHITECTURE · RJ CLOUD PARTNERS</text>
+          </svg>
+        </div>
+
+        <!-- Right: arch principles -->
+        <div class="arch-side">
+          <div class="arch-pill">
+            <div class="arch-pill-icon">🛡️</div>
+            <div>
+              <h4>Zero-Trust Security</h4>
+              <p>Identity-first, least-privilege access enforced at every layer — edge to data.</p>
+            </div>
+          </div>
+          <div class="arch-pill">
+            <div class="arch-pill-icon">📡</div>
+            <div>
+              <h4>Always Observable</h4>
+              <p>Azure Monitor, Log Analytics, and Defender for Cloud built into every tier.</p>
+            </div>
+          </div>
+          <div class="arch-pill">
+            <div class="arch-pill-icon">⚡</div>
+            <div>
+              <h4>Elastic & Global</h4>
+              <p>Auto-scaling compute with geo-replication and Front Door for global reach.</p>
+            </div>
+          </div>
+          <div class="arch-pill">
+            <div class="arch-pill-icon">💰</div>
+            <div>
+              <h4>Cost-Aware by Design</h4>
+              <p>Right-sized services, reservation strategies, and continuous FinOps reviews.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════ WHY US ═══════════════════ -->
+    <section id="why-us">
+      <div class="section-label">Our Edge</div>
+      <h2 class="section-title">Why Teams Trust Us</h2>
+      <div class="why-grid">
+        <div class="why-card">
+          <div class="why-num">01</div>
+          <h3>Partner Mindset</h3>
+          <p>We align architecture to your business goals — not just cloud checklists.</p>
+        </div>
+        <div class="why-card">
+          <div class="why-num">02</div>
+          <h3>Enterprise Experience</h3>
+          <p>Regulated industries, complex environments, multi-cloud realities — we've been there.</p>
+        </div>
+        <div class="why-card">
+          <div class="why-num">03</div>
+          <h3>Transparent Delivery</h3>
+          <p>Clear roadmaps, documented decisions, and knowledge transfer so your team stays in control.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════ CONTACT ═══════════════════ -->
+    <section id="contact">
+      <div class="contact-inner">
+        <div class="contact-left">
+          <div class="section-label">Get Started</div>
+          <h2 class="section-title">Let's Talk Cloud</h2>
+          <p>Share your goals — we'll respond with a focused, no-pressure consultation.</p>
+          <div class="contact-info-row">📧 &nbsp;<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="2048454c4c4f60524a434c4f5544504152544e4552530e434f4d">[email&#160;protected]</a></div>
+          <div class="contact-info-row">📞 &nbsp;+1 (800) 000-0000</div>
+          <div class="contact-info-row">📍 &nbsp;United States · Remote</div>
+        </div>
+        <div class="contact-form">
+          <div class="form-row">
+            <div class="form-field">
+              <label for="name">Name</label>
+              <input id="name" type="text" placeholder="Your name" />
+            </div>
+            <div class="form-field">
+              <label for="email">Work Email</label>
+              <input id="email" type="email" placeholder="you@company.com" />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-field">
+              <label for="company">Company</label>
+              <input id="company" type="text" placeholder="Company name" />
+            </div>
+            <div class="form-field">
+              <label for="cloud">Primary Cloud</label>
+              <select id="cloud">
+                <option>Azure</option>
+                <option>AWS</option>
+                <option>Google Cloud</option>
+                <option>Multi-cloud</option>
+                <option>Not sure yet</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-field">
+            <label for="message">What are you looking to achieve?</label>
+            <textarea id="message" rows="4" placeholder="Migrations, new workloads, security, cost optimization…"></textarea>
+          </div>
+          <button type="submit" class="btn-primary" style="width:100%;justify-content:center;">Submit Inquiry</button>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <div class="footer-logo">
+      <img src="logo.png" alt="RJ Cloud Partners">
+      <span style="color:var(--muted)">RJ Cloud Partners</span>
+    </div>
+    <p>© <span id="year"></span> RJ Cloud Partners. All rights reserved.</p>
+  
