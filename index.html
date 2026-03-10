@@ -729,25 +729,25 @@
           <div class="contact-info-row">📞 &nbsp;+1 (800) 000-0000</div>
           <div class="contact-info-row">📍 &nbsp;United States · Remote</div>
         </div>
-        <div class="contact-form">
+        <form id="contact-form" class="contact-form">
           <div class="form-row">
             <div class="form-field">
               <label for="name">Name</label>
-              <input id="name" type="text" placeholder="Your name" />
+              <input id="name" name="name" type="text" placeholder="Your name" required />
             </div>
             <div class="form-field">
               <label for="email">Work Email</label>
-              <input id="email" type="email" placeholder="you@company.com" />
+              <input id="email" name="email" type="email" placeholder="you@company.com" required />
             </div>
           </div>
           <div class="form-row">
             <div class="form-field">
               <label for="company">Company</label>
-              <input id="company" type="text" placeholder="Company name" />
+              <input id="company" name="company" type="text" placeholder="Company name" />
             </div>
             <div class="form-field">
               <label for="cloud">Primary Cloud</label>
-              <select id="cloud">
+              <select id="cloud" name="cloud">
                 <option>Azure</option>
                 <option>AWS</option>
                 <option>Google Cloud</option>
@@ -758,10 +758,19 @@
           </div>
           <div class="form-field">
             <label for="message">What are you looking to achieve?</label>
-            <textarea id="message" rows="4" placeholder="Migrations, new workloads, security, cost optimization…"></textarea>
+            <textarea id="message" name="message" rows="4" placeholder="Migrations, new workloads, security, cost optimization…"></textarea>
           </div>
-          <button type="submit" class="btn-primary" style="width:100%;justify-content:center;">Submit Inquiry</button>
-        </div>
+          <button type="submit" id="submit-btn" class="btn-primary" style="width:100%;justify-content:center;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            <span id="btn-label">Submit Inquiry</span>
+          </button>
+          <div id="form-success" style="display:none;margin-top:16px;padding:14px 18px;border-radius:12px;background:rgba(52,211,153,0.1);border:1px solid rgba(52,211,153,0.3);color:#34D399;font-size:0.9rem;text-align:center;">
+            ✅ Message sent! We’ll be in touch shortly.
+          </div>
+          <div id="form-error" style="display:none;margin-top:16px;padding:14px 18px;border-radius:12px;background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.3);color:#F87171;font-size:0.9rem;text-align:center;">
+            ❌ Something went wrong. Please try again.
+          </div>
+        </form>
       </div>
     </section>
 
@@ -773,4 +782,52 @@
       <span style="color:var(--muted)">RJ Cloud Partners</span>
     </div>
     <p>© <span id="year"></span> RJ Cloud Partners. All rights reserved.</p>
-  
+  </footer>
+
+</div>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  const form = document.getElementById('contact-form');
+  const btnLabel = document.getElementById('btn-label');
+  const submitBtn = document.getElementById('submit-btn');
+  const successMsg = document.getElementById('form-success');
+  const errorMsg = document.getElementById('form-error');
+
+  form.addEventListener('submit', async function(e) {
+    e.preventDefault();
+    successMsg.style.display = 'none';
+    errorMsg.style.display = 'none';
+    btnLabel.textContent = 'Sending…';
+    submitBtn.disabled = true;
+    submitBtn.style.opacity = '0.7';
+
+    const data = new FormData(form);
+    try {
+      const response = await fetch('https://formspree.io/f/mbdzgryy', {
+        method: 'POST',
+        body: data,
+        headers: { 'Accept': 'application/json' }
+      });
+      if (response.ok) {
+        successMsg.style.display = 'block';
+        form.reset();
+        btnLabel.textContent = 'Sent ✓';
+        submitBtn.style.opacity = '1';
+      } else {
+        errorMsg.style.display = 'block';
+        btnLabel.textContent = 'Submit Inquiry';
+        submitBtn.disabled = false;
+        submitBtn.style.opacity = '1';
+      }
+    } catch (err) {
+      errorMsg.style.display = 'block';
+      btnLabel.textContent = 'Submit Inquiry';
+      submitBtn.disabled = false;
+      submitBtn.style.opacity = '1';
+    }
+  });
+</script>
+</body>
+</html>
