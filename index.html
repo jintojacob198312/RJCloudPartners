@@ -962,6 +962,12 @@
         form.reset();
         btnLabel.textContent = 'Sent ✓';
         submitBtn.style.opacity = '1';
+        setTimeout(() => {
+          btnLabel.textContent = 'Submit Inquiry';
+          submitBtn.disabled = false;
+          submitBtn.style.opacity = '1';
+          successMsg.style.display = 'none';
+        }, 4000);
       } else {
         errorMsg.style.display = 'block';
         btnLabel.textContent = 'Submit Inquiry';
