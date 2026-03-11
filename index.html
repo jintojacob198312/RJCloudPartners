@@ -872,6 +872,11 @@
           <div class="contact-info-row">📍 &nbsp;United States · Remote</div>
         </div>
         <form id="contact-form" class="contact-form">
+          <!-- Web3Forms -->
+          <input type="hidden" name="access_key" value="57b62123-bfe4-4afe-aac5-c7bd6c634414"/>
+          <input type="hidden" name="subject" value="New Inquiry — RJ Cloud Partners"/>
+          <input type="hidden" name="from_name" value="RJ Cloud Partners Website"/>
+          <input type="checkbox" name="botcheck" style="display:none"/>
           <div class="form-row">
             <div class="form-field">
               <label for="name">Name</label>
@@ -947,7 +952,7 @@
 
     const data = new FormData(form);
     try {
-      const response = await fetch('https://formspree.io/f/mbdzgryy', {
+      const response = await fetch('https://api.web3forms.com/submit', {
         method: 'POST',
         body: data,
         headers: { 'Accept': 'application/json' }
